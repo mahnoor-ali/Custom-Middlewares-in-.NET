@@ -1,3 +1,4 @@
+## 1. Manipulating request and response using middleware
 ```
 app.Use(async (context, next) =>
     {
@@ -7,10 +8,10 @@ app.Use(async (context, next) =>
     });
 ```
 
-  ## Before next() 
+  ### Before next() 
   - Process, manipulate or apply some business logic to upcoming REQUEST
 
-   ## After next()
+   ### After next()
    - Process, manipulate or apply some business logic to RESPONSE
   #### NOT RECOMMENDED!
   -  To interact with response if it has already been sent to user.. 
@@ -47,7 +48,7 @@ app.Use(async (context, next) =>
     });
 ```
 
-## Terminal middleware
+## 2. Terminal middleware
 - Middleware that terminates the application i.e this is the last middleware that will be executed in program.cs (just like app.Run() is our last middleware in our Program.cs
 
 - Not using next()
@@ -58,3 +59,7 @@ app.Run(async (context) =>
 {
 	await context.Response.WriteAsync("this is a short-circuit middleware / Terminal middleware");
 });
+
+## 3. Example usage: IP Address Logging Middleware
+Scenario: Your application is hosted on the web, and you want to log the IP addresses of users who make requests to your application. This data can be used for analytics or security purposes, such as identifying malicious users.
+ --> Implemented in IPLoggingMiddleware.cs
