@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
 namespace Middlewares.Middlewares
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class IPLoggingMiddleware
     {
         private readonly RequestDelegate _next;
@@ -14,10 +13,19 @@ namespace Middlewares.Middlewares
             _next = next;
         }
 
-        public Task Invoke(HttpContext httpContext)
+        public Task Invoke(HttpContext context)
         {
+            var ipAddress = context.Connection.RemoteIpAddress?.ToString();
+            var requestPath = context.Request.Path;
+            logInformation(ipAddress, requestPath);
 
-            return _next(httpContext);
+            return _next(context);
+        }
+
+        // Simulating logger for simplicity
+        public void logInformation(string ipAddress, string requestPath)
+        {
+            Console.WriteLine($"Request from IP: {ipAddress}, Path: {requestPath}, Time: {DateTime.UtcNow}");
         }
     }
 
