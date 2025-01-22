@@ -1,3 +1,5 @@
+using Middlewares.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -18,16 +20,20 @@ if (app.Environment.IsDevelopment())
 
 app.Use(async (context, next) =>
     {
+        // Manipulate headers in Response (not good approach - just an example of usage)
         context.Response.OnStarting(() => {
             context.Response.Headers["header-secret"] = "secret";
             return Task.CompletedTask;
         });
-        // request
+
         await next();
-        // response
-
-
     });
+
+
+if (builder.Configuration.GetValue<bool>("MiddlewareSettings:EnableIpLogging"))
+{
+    app.UseIPLoggingMiddleware();
+}
 
 app.UseHttpsRedirection();
 
