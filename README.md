@@ -1,4 +1,3 @@
-# Custom-Middleware:
 app.Use(async (context, next) =>
     {
         // request
