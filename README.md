@@ -1,9 +1,11 @@
+```
 app.Use(async (context, next) =>
     {
         // request
         await next();
         // response
     });
+    ```
 
   ## Before next() 
   - Process, manipulate or apply some business logic to upcoming REQUEST
